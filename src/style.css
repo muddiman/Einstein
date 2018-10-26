@@ -1,3 +1,11 @@
 #gameCanvas {
-    border: 5px solid black; 
+    border: 5px solid green; 
+}
+#sidebar {
+    width: 25%;
+    right: 0;
+    padding-right: 150px;
+}
+.row {
+    margin-right: 25%;
 }

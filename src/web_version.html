@@ -8,26 +8,35 @@
     <script type="text/javascript" src="script.js"></SCRIPT>
 </HEAD>
 <BODY>
-    <div class="w3-container w3-center w3-green">
-      <h1>EINSTEIN</H1>
-    </div>
+    <div class="w3-container w3-center w3-green" id="header">
+        <p id="title">EINSTEIN</p>
+        <div class="w3-container" id="scoreboard">
+            <div class="scores w3-right" id="score"><p class="score" id="score">SCORE: 0 pts</p></div>
+            <div class="scores w3-left"  id="hiscore"><p class="score" id="hiscore">HI-SCORE: 0 pts</p></div>
+        </div>
+    </div>  <!--    End of Header   -->
     <div class="w3-container">
-        <h3>What is the square root of the following numbers.</h3>
-        <button type="button"  class="w3-btn w3-white w3-border w3-border-green w3-round-large" onclick="question()">START</button><br><br>
+        <h3>What is the square root of the number in the box?</h3>
+        <button type="button" id="start_button" onclick="runGame()">START GAME</button><br><br>
     </div> 
-    <div class="row">
-       
+    <div class="row">    
         <!-- Sidebar -->
         <div class="w3-sidebar w3-bar-block" id="sidebar" >
             <form action="/action.php" onsubmit="answer()">
-            Enter your answer:<input class="w3-bar-item" id="user_input" type="number">
-            <button type="button" class="w3-bar-item w3-btn w3-white w3-border w3-border-green w3-round-large" onclick="answer()" >Submit</button>
+                Enter your answer:<input class="w3-bar-item w3-border w3-border-green w3-round-large" id="user_input" type="number">
+                <div id="button_container">
+                <ul>
+                    <li><button type="button"  id="submit" onclick="answer()" >Submit Answer</button></li>
+                    <li><button type="button"  id="next" onclick="newQuestion()">Next Question</button></li>
+                </ul>
+                </div>
+            </form>
         </div>
         <!-- Main content, game canvas -->
-        <div class="w3-container">
+        <div class="w3-container" id="game_container">
             <canvas id="gameCanvas" width="800" height="500"></canvas>
-        </div>
-        
+            <p id="hint">* Answers are always positive integers.</p>
+        </div>        
     </div>
 </BODY>
 <!--

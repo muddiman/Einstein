@@ -1,10 +1,94 @@
+button {
+    background-color: white;
+    border: 1px solid green;
+    font-size: 12px;
+    text-align: center;
+    padding: 10px 10px;
+    text-decoration: none;
+    border-radius: 10px;
+}
+button:hover {
+    box-shadow: 0 12px 12px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.082);
+    /* font-weight: bolder; */
+}
+#header {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-bottom: 0px;
+}
+#title {
+    padding: 0px;
+    margin: 0px;
+    font-size: 108px;
+    font-weight: bolder;
+    color: rgb(255, 253, 127);
+}
+#scoreboard {
+    padding-bottom: 0px;
+    margin: 0px;
+}
+.scores {
+    padding-bottom: 0px;
+    display: inline-block;
+    padding: 0px;
+    margin: 0px;
+    width: 50%;
+    font-size: 40px;
+    font-weight: bolder;
+    font-family: 'dot matrix', 'Segoe UI';
+}
+#score {
+    text-align: right;
+}
+#hiscore {
+    text-align: left;
+}
 #gameCanvas {
     border: 5px solid green; 
+}
+#game_container {
+    color: rgb(153, 153, 153);
 }
 #sidebar {
     width: 25%;
     right: 0;
     padding-right: 150px;
+}
+#user_input {
+    border: 6px solid green;
+    background-color: rgba(187, 189, 93, 0.144);
+    width: 310px;
+}
+#button_container {
+    margin-top: 12px;
+}
+#button_container ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    position: fixed;
+}
+#button_container ul li {
+    display: inline;
+}
+
+#next {
+    width: 150px;
+    display: inline-block;
+}
+#submit {
+    width: 150px;
+    display: inline-block;
+}
+.disabled {
+  background-color: rgba(128, 128, 128, 0.199);
+  opacity: 0.6;
+  cursor: not-allowed;
+  /* box-shadow: none; */
+  border: none;
+  color: rgba(128, 128, 128, 0.637);
+}
+.disabled button:hover {
+    box-shadow: none;
 }
 .row {
     margin-right: 25%;

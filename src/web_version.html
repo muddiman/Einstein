@@ -7,23 +7,29 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
     <script type="text/javascript" src="script.js"></SCRIPT>
 </HEAD>
-<BODY>
-    <div class="w3-container w3-center w3-green" id="header">
-        <p id="title">EINSTEIN</p>
-        <div class="w3-container" id="scoreboard">
-            <div class="scores w3-right" id="score"><p class="score" id="score">SCORE: 0 pts</p></div>
-            <div class="scores w3-left"  id="hiscore"><p class="score" id="hiscore">HI-SCORE: 0 pts</p></div>
+<BODY>  
+    <!--    Header  -->
+    <div class="container w3-center" id="header">
+        <div class="row">
+            <p id="title">EINSTEIN</p>
+        </div>
+        <div class="row" id="scoreboard">
+            <div class="scores" id="hiscore">HI-SCORE: 0 pts</div>
+            <div class="scores" id="score"  >SCORE: 0 pts</div>
         </div>
     </div>  <!--    End of Header   -->
     <div class="w3-container">
-        <h3>What is the square root of the number in the box?</h3>
+        <p class="text">What is the square root of the number in the box?</p>
         <button type="button" id="start_button" onclick="runGame()">START GAME</button><br><br>
     </div> 
-    <div class="row">    
-        <!-- Sidebar -->
-        <div class="w3-sidebar w3-bar-block" id="sidebar" >
+    <!-- Main content, game canvas -->
+    <div id="game_container">
+        <canvas id="gameCanvas" width="800" height="500"></canvas>
+        <p id="hint">* Answers are always positive integers.</p>
+        <!-- Control Panel -->
+        <div class="control_panels" id="controls" >
             <form action="/action.php" onsubmit="answer()">
-                Enter your answer:<input class="w3-bar-item w3-border w3-border-green w3-round-large" id="user_input" type="number">
+                Enter your answer:<br><input class="w3-bar-item   w3-round-large" id="user_input" type="number">
                 <div id="button_container">
                 <ul>
                     <li><button type="button"  id="submit" onclick="answer()" >Submit Answer</button></li>
@@ -31,13 +37,10 @@
                 </ul>
                 </div>
             </form>
-        </div>
-        <!-- Main content, game canvas -->
-        <div class="w3-container" id="game_container">
-            <canvas id="gameCanvas" width="800" height="500"></canvas>
-            <p id="hint">* Answers are always positive integers.</p>
-        </div>        
+        </div>      
     </div>
+      
+    <footer><p>Copyright &copy; 2018-2019 roger-clarke.com</p></footer>
 </BODY>
 <!--
 #############################################################

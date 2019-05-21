@@ -2,14 +2,13 @@
 <HTML>
 <HEAD>
     <title>EINSTEIN</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="einstein_style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
-    <script type="text/javascript" src="script.js"></SCRIPT>
+    <script type="text/javascript" src="einstein_script.js"></SCRIPT>
 </HEAD>
 <BODY>  
     <!--    Header  -->
-    <div class="container w3-center" id="header">
+    <div class="container" id="header">
         <div class="row">
             <p id="title">EINSTEIN</p>
         </div>
@@ -18,9 +17,14 @@
             <div class="scores" id="score"  >SCORE: 0 pts</div>
         </div>
     </div>  <!--    End of Header   -->
-    <div class="w3-container">
+    <div class="container">
         <p class="text">What is the square root of the number in the box?</p>
-        <button type="button" id="start_button" onclick="runGame()">START GAME</button><br><br>
+        <div class="button_container">
+        <ul>
+        <li><button type="button" id="start_button" onclick="runGame()">START GAME</button></li>
+        <li><button type="button" id="sound_button" onclick="toggleSnd()">MUTE</button></li>
+        </ul>
+        </div>
     </div> 
     <!-- Main content, game canvas -->
     <div id="game_container">
@@ -29,8 +33,8 @@
         <!-- Control Panel -->
         <div class="control_panels" id="controls" >
             <form action="/action.php" onsubmit="answer()">
-                Enter your answer:<br><input class="w3-bar-item   w3-round-large" id="user_input" type="number">
-                <div id="button_container">
+                Enter your answer:<br><input class="" id="user_input" type="number">
+                <div class="button_container">
                 <ul>
                     <li><button type="button"  id="submit" onclick="answer()" >Submit Answer</button></li>
                     <li><button type="button"  id="next" onclick="newQuestion()">Next Question</button></li>
@@ -41,6 +45,9 @@
     </div>
       
     <footer><p>Copyright &copy; 2018-2019 roger-clarke.com</p></footer>
+    <script>
+        preload();
+    </SCRIPT>
 </BODY>
 <!--
 #############################################################
@@ -48,6 +55,7 @@
 #                           EINSTEIN                        #
 #                       By: .muddicode                      #
 #                    The SQUARE ROOT GAME                   #
+#                     VERSION: 0.9.0 Release Candidate 1    #
 #                                                           #
 #############################################################
 -->

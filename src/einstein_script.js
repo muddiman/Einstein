@@ -2,13 +2,13 @@
 =========================================================================
 |                           EINSTEIN                                    |
 |                       BY: .muddicode                                  |
-|                       Version: 0.8.0 - beta                           |
+|                       Version: 0.9.0 - Release Candidate 1            |
 =========================================================================
 */
 
 /*  FLAGS   */
 const DEBUG_ON=true;
-const TIMER_ON=false;
+const TIMER_ON=true;
 
 /*  constants   */
 const canvasHeight=500;
@@ -17,20 +17,58 @@ const EASY=15;
 const HARD=10;
 const GENIUS=5;
 const TIME=EASY;              //  15 second timer
+/* const winSndFX = new Sound("correct.wav");
+const loseSndFX = new Sound("wwrong.wav"); */
 
 /*  GLOBALS */
 var timer;
+var SOUND_ON=true;
+
+/*  classes */
+/*  sound module    */
+function sound(src) {
+    this.sound = document.createElement("audio");
+    this.sound.src = src;
+    this.sound.setAttribute("preload", "auto");
+    this.sound.setAttribute("controls", "none");
+    this.sound.style.display = "none";
+    document.body.appendChild(this.sound);
+    this.play = function(){
+      this.sound.play();
+    };
+    this.stop = function(){
+      this.sound.pause();
+    };
+  }
 
 /*  objects */
 var Game = {
     answer:     0,
     score:      0,
     hiScore:    0,
+    Sound:      {},
     init:       function () {
                     this.answer = 0;
                     this.score = 0;
                 },
 };
+/*  pre-load game assets    */
+function preload() {
+    Game.Sound.win = new sound("correct.wav");
+    Game.Sound.lose = new sound("wrong.wav");
+    Game.Sound.timer = new sound("pulse.wav");
+    Game.Sound.timer.sound.volume = 0.1;
+}
+
+function toggleSnd() {
+    if (SOUND_ON) {
+        SOUND_ON = false;
+        document.getElementById("sound_button").innerHTML = `SOUND`;
+    } else {
+        SOUND_ON = true;
+        document.getElementById("sound_button").innerHTML = `MUTE`;
+    }
+}
 
 function getAnswer() {
     return Math.floor((Math.random() * 90) + 10);           // return a random integer between 10 and 100
@@ -45,6 +83,9 @@ function squareIt(x) {
 function wrongAnswer() {
     if (DEBUG_ON === true) {
         console.log(`The correct answer is: ${Game.answer}`);
+    }
+    if (SOUND_ON) {
+        Game.Sound.lose.play();
     }
     let c = document.getElementById("gameCanvas");
     let ctx = c.getContext("2d");
@@ -70,11 +111,17 @@ function answer() {
     ctx.fillStyle = "rgb(0, 0, 0)";
     if (Game.answer == document.getElementById("user_input").value) {
         /*  correct answer subroutine   */
+        if (SOUND_ON) {
+            /*  play correct.wav    */
+            Game.Sound.win.play();
+        }
         ctx.fillText("Correct!", canvasWidth/2, 350);
         Game.score += 10;
         if (Game.score > Game.hiScore) {
             Game.hiScore = Game.score;
-        }
+            document.getElementById("hiscore").setAttribute("class", "scores blink");
+        } 
+        
         /*  display score   */
         document.getElementById("score").innerHTML = `SCORE: ${Game.score} pts`;
         document.getElementById("hiscore").innerHTML = `HI-SCORE: ${Game.hiScore} pts`;
@@ -84,6 +131,9 @@ function answer() {
             document.getElementById("submit").setAttribute("class", "disabled");
         }, 100);
     } else {
+        if (SOUND_ON) {
+            /*  play wrong.wav    */
+        }
         wrongAnswer();
     } 
 }
@@ -91,6 +141,7 @@ function answer() {
 /*  Main Program    */
 function runGame() {
     Game.init();
+    document.getElementById("hiscore").setAttribute("class", "scores");
     stopTimer(timer);
     document.getElementById("score").innerHTML = `SCORE: ${Game.score} pts`;
     document.getElementById("hiscore").innerHTML = `HI-SCORE: ${Game.hiScore} pts`;
@@ -142,6 +193,9 @@ function displayTime(time) {
      ctx.fillRect(x, y, 200, 100);
      ctx.fillStyle = "rgb(255, 255, 255)";              //  white 
      ctx.font = "bold 100px Dot Matrix";
+     if (SOUND_ON){
+         Game.Sound.timer.play();
+     }
      ctx.fillText(time, canvasWidth - 100, 85);
 }
 

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Engineer extraordinaire: Chemical, Civil/Environmental, Software">
+    <meta name="author" content=".muddicode" />
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'pages/css/style.css' %}">  
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <style>
+      * {
+    box-sizing: border-box;
+    }
+    .topnav {
+    overflow: hidden;
+    background-color: #333;
+    margin-left: 0%;
+    margin-right: 0px; 
+    }
+    .topnav a {
+    float: left;
+    color: #f2f2f2;
+    display: block;
+    padding: 16px 14px;
+    text-decoration: none;
+    }
+    .topnav a:hover {
+    background-color: grey;
+    color: black;
+    }
+    .parallax {
+    background-image: url("https://cdn-images-1.medium.com/max/1800/0*QUqE4WGF8_cC9bIl.jpg");
+    min-height: 500px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
+    body {
+    background-color: rgb(255, 254, 251);
+    text-align: center;
+    margin: 0px;
+    font-family: Microsoft YaHei;
+    font-size: small;
+    }
+    body a {
+    text-decoration: none;
+    }
+    body a:hover {
+    color: #055813;
+    font-weight: bold;
+    }
+    #main_page {
+    min-height: 400px;
+    }
+    #showcase {
+    color: #fff;
+    padding-top: 125px;
+    }
+    #showcase button {
+    font-size: 20px;
+    width: 15%;
+    padding: 15px 32px;
+    color: yellow;
+    background:transparent;
+    border: 2px solid #4CAF50;
+    margin: 4px 2px;
+    border-radius: 12px;
+    }
+    #showcase button:hover {
+    background-color: green;
+    color: #ffffff;
+    font-weight: bolder;
+    }
+    /* features */
+    #features {
+    margin:0;
+    }
+    .fas .far {
+    color: green;
+    }
+    /* Media Queries for Small Screens */
+    .column {
+    float: left; 
+    padding: 0;
+    /* display: inline; */
+    }
+    /* for tablets, laptops and desktops */
+    .col-4 {width:33.3%;}
+    .col-12 {width:100%;}
+    /* for phones and small devices */
+    @media only screen and (max-width: 768px) {
+        /* For mobile phones: */
+        [class*="col-"] {
+            width: 100%;
+        }
+    }
+    .row {
+    padding: 0px;
+    margin:0;
+    }
+    .row::after {
+    content: "";
+    display: table;
+    clear: both;
+    }
+    #links {
+    background-color: #333;
+    color: #f1f1f1;
+    text-align: left;
+    }
+    #links H3 {
+    text-transform: uppercase;
+    color: red;
+    }
+    #links .column {
+    padding-left:90px;
+    padding-right:90px;
+    }
+    #links ul  {
+    padding: 0px;
+    list-style: none;
+    }
+    #links li {
+    padding-bottom: 5px;
+    padding-top: 5px;
+    }
+    #links li a {
+    color: white;
+    }
+    h1 {
+    text-align: center;
+    }
+    footer {
+        color: rgb(163, 163, 163);
+        background-color: black;
+        padding: 5px;
+    }
+    footer a {
+        color: rgb(163, 163, 163);
+        text-decoration: none;
+    }
+    footer a:hover {
+        color: #f2f2f2;
+    }
+    footer p {
+        padding-bottom: 3px;
+    }
+    
+    /* Full-width input fields */
+    input[type=text], input[type=password] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+    }
+    
+    /* Set a style for all buttons */
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+    }
+    
+    button:hover {
+    color: white;
+    background-color: green;
+    font-weight: bolder;
+    }
+    /*
+    .caption {
+        width: auto;
+        padding: 35%;
+    }
+    */
+    
+    /* Extra styles for the cancel button */
+    .cancelbtn {
+        width: auto;
+        padding: 10px 18px;
+        background-color: #f44336;
+    }
+    
+    /* Center the image and position the close button */
+    .imgcontainer {
+        text-align: center;
+        margin: 24px 5px 12px 5px;
+        position: relative;
+    }
+    
+    img.avatar {
+        width: 40%;
+        border-radius: 50%;
+    }
+    
+    .container {
+        padding: 16px;
+    }
+    
+    span.psw {
+        float: right;
+        padding-top: 16px;
+    }
+    
+    /* The Modal (background) */
+    .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        right: 0;
+        top: 0;
+        width: 400px; /* Full width */
+        height: 600px; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        padding-top: 30px;
+        padding-bottom: 30px;
+        padding-left: 80px;
+    }
+    
+    /* Modal Content/Box */
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+        border: 1px solid #888;
+        width: 80%; /* Could be more or less, depending on screen size */
+    }
+    .registration {
+        width: 400px;
+    }
+    
+    /* The Close Button (x) */
+    .close {
+        position: absolute;
+        right: 25px;
+        top: 0;
+        color: #000;
+        font-size: 35px;
+        font-weight: bold;
+    }
+    label {
+        text-align: left;
+    }
+    
+    .close:hover,
+    .close:focus {
+        color: red;
+        cursor: pointer;
+    }
+    
+    /* Add Zoom Animation */
+    .animate {
+        -webkit-animation: animatezoom 0.6s;
+        animation: animatezoom 0.6s
+    }
+    
+    @-webkit-keyframes animatezoom {
+        from {-webkit-transform: scale(0)} 
+        to {-webkit-transform: scale(1)}
+    }
+        
+    @keyframes animatezoom {
+        from {transform: scale(0)} 
+        to {transform: scale(1)}
+    }
+    
+    /* Change styles for span and cancel button on extra small screens */
+    @media screen and (max-width: 300px) {
+        span.psw {
+           display: block;
+           float: none;
+        }
+        .cancelbtn {
+           width: 100%;
+        }
+        button {
+          width: 33%;
+	  font-size: 3vw;
+	}
+    }
+    </style>
+    {% block header %}
+    {% endblock header %}
+</head>
+
+<body>    
+    <div class="head">
+        <div class="topnav" id="navbar">
+            <a href="{% url 'pages-landing-page' %}">Home</a>
+            <a href="{% url 'pages-about' %}">About</a>
+            <a href="{% url 'blog-home' %}">Blog</a>
+            <a href="{% url 'pages-projects' %}">Projects</a>
+            <a href="#" id="contact" onclick="form('contactform')">Contact</a>
+            <a href="{% url 'logout' %}" style="float:right" id="logout" >Logout</a>
+        </div>
+    </div> <!--End of header div-->
+
+      
+    <!--    the main section   -->   
+    <section id="main_page">
+        {% if messages %}
+          {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endif %}
+
+        {% block content %}
+        {% endblock content %}
+    </section>
+    
+
+
+    <!-- Contact Me Form -->
+
+    <!-- Links Section -->
+    <section id="links">
+        <div class="container">
+            <div class="row">
+                <div class="col-12"></div>
+                <div class="row">
+                    <div class="column col-4">
+                        <h3>Follow Me</h3>
+                        <ul>
+                                <li><a href="https://www.twitter.com/muddiman"><i class="fab fa-twitter fa-lg"> Twitter</i></a></li>
+                                <li><a href="https://www.facebook.com/muddiman"><i class="fab fa-facebook-f fa-lg"> Facebook</i></a></li>
+                                <li><a href="https://www.linkedin.com/"><i class="fab fa-linkedin fa-lg"> Linkedin</i></a></li>
+                                <li><a href="https://www.skype.com/muddi100"><i class="fab fa-skype fa-lg"> Skype</i></a></li>
+                        </ul>
+                    </div>
+                    <div class="column col-4">
+                        <h3>Contact</h3>
+                        <ul>
+                            <li><a href="#"><i class="far fa-map fa-lg"> Address: </i>#9 Whatever Lane, Anytown.</a></li>
+                            <li><a href="#"><i class="fas fa-phone-volume fa-lg"> Phone: </i> (555) 555-5555</a></li>
+                            <li><a href="#"><i class="fas fa-at fa-lg"> Email: </i>me@roger-clarke.com</a></li>
+                        </ul>
+                    </div>
+                    <div class="column col-4">
+                        <h3>Links</h3>
+                        <ul>
+                            <li><a href="{% url 'pages-landing-page' %}"><i class="fas fa-home fa-lg"> Home</i></a></li>
+                            <li><a href="{% url 'blog-home' %}"><i class="fas fa-rss fa-lg"> Blog</i></a></li>
+                            <li><a href="{% url 'pages-projects' %}"><i class="fas fa-project-diagram fa-lg"> Projects</i></a></li>
+                            <li><a href="#" onclick="form('contactform')"><i class="far fa-envelope fa-lg"> Contact</i></a></li>
+                            <li><a href="{% url 'logout' %}">Logout</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section> <!--End of the links section-->
+
+    <footer>
+        <div class="container">
+            <p>
+                <a href="#">Privacy</a> | <a href="#">Terms and Conditions</a>
+            </p>
+        </div>
+        <div>
+            <p>Copyright &copy; 2018 Roger A. Clarke. All Rights Reserved. me@roger-clarke.com</p>
+        </div>
+    </footer>
+    
+    <script>
+      function clickOutsideForm(form) {
+        var modal = document.getElementById(form);
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        };
+      }
+
+      function form(formType) {
+        var modal = document.getElementById(formType);
+        modal.style.display = 'block';
+        clickOutsideForm(formType);
+      }
+    </script>
+</body>
+</html>

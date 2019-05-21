@@ -46,10 +46,12 @@ var Game = {
     answer:     0,
     score:      0,
     hiScore:    0,
+    time:       TIME,
     Sound:      {},
     init:       function () {
                     this.answer = 0;
                     this.score = 0;
+                    this.time = TIME;
                 },
 };
 /*  pre-load game assets    */
@@ -92,6 +94,7 @@ function wrongAnswer() {
     ctx.clearRect(0, 110, canvasWidth, canvasHeight);
     ctx.fillStyle = "rgb(0, 0, 0)";
     ctx.font = "bold 200px Arial";
+    ctx.textAlign = "center";
     ctx.fillText("Wrong!", canvasWidth/2, 350);
     Game.init();
     document.getElementById("score").innerHTML = `SCORE: ${Game.score} pts`;
@@ -115,6 +118,7 @@ function answer() {
             /*  play correct.wav    */
             Game.Sound.win.play();
         }
+        ctx.textAlign = "center";
         ctx.fillText("Correct!", canvasWidth/2, 350);
         Game.score += 10;
         if (Game.score > Game.hiScore) {
@@ -174,7 +178,8 @@ function stopTimer(timer) {
 
 function startTimer(time) {
         timer = setInterval(() => {
-         displayTime(time);
+        //  displayTime(time);
+        Game.time = time;
         if (time < 1) {
             clearInterval(timer);
             wrongAnswer();
@@ -198,6 +203,31 @@ function displayTime(time) {
      }
      ctx.fillText(time, canvasWidth - 100, 85);
 }
+
+function banner() {
+    let c = document.getElementById("gameCanvas");
+    let ctx = c.getContext("2d");
+    ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
+    ctx.fillRect(0, 0, canvasWidth, 100);
+    ctx.fillStyle = "rgb(255,255, 255)"; 
+    ctx.font = "bold 40px Dot Matrix";
+    ctx.textAlign = "left";
+    ctx.fillText("HI-SCORE", 40, 40);
+    ctx.fillText(`${Game.hiScore}`, 80, 80);
+    ctx.textAlign = "center";
+    ctx.fillText("TIME", canvasWidth/2, 40);
+    ctx.fillText(`${Game.time}`, canvasWidth/2, 80);
+    ctx.textAlign = "right";
+    ctx.fillText("SCORE", canvasWidth - 40, 40);
+    ctx.fillText(`${Game.score}`, canvasWidth - 80, 80);
+}
+
+var animate = setInterval(() => {
+    let c = document.getElementById("gameCanvas");
+    let ctx = c.getContext("2d");
+    ctx.clearRect(0, 0, canvasWidth, 100);    
+    banner();
+}, 100);
 
 
 /*

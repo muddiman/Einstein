@@ -2,12 +2,11 @@
 =========================================================================
 |                           EINSTEIN                                    |
 |                       BY: .muddicode                                  |
-|                       Version: 0.9.0 - Release Candidate 1            |
+|                       Version: 1.0.0                                  |
 =========================================================================
 */
 
 /*  FLAGS   */
-const DEBUG_ON=true;
 const TIMER_ON=true;
 
 /*  constants   */
@@ -17,11 +16,10 @@ const EASY=15;
 const HARD=10;
 const GENIUS=5;
 const TIME=EASY;              //  15 second timer
-/* const winSndFX = new Sound("correct.wav");
-const loseSndFX = new Sound("wwrong.wav"); */
 
 /*  GLOBALS */
 var timer;
+var count = 0;
 var SOUND_ON=true;
 
 /*  classes */
@@ -34,7 +32,9 @@ function sound(src) {
     this.sound.style.display = "none";
     document.body.appendChild(this.sound);
     this.play = function(){
-      this.sound.play();
+        if (Game.Settings.SOUND) {
+            this.sound.play();
+        }
     };
     this.stop = function(){
       this.sound.pause();
@@ -43,9 +43,10 @@ function sound(src) {
 
 /*  objects */
 var Game = {
+    Settings:   {},
     answer:     0,
     score:      0,
-    hiScore:    0,
+    hiScore:    100,
     time:       TIME,
     Sound:      {},
     init:       function () {
@@ -54,6 +55,7 @@ var Game = {
                     this.time = TIME;
                 },
 };
+
 /*  pre-load game assets    */
 function preload() {
     Game.Sound.win = new sound("correct.wav");
@@ -62,12 +64,24 @@ function preload() {
     Game.Sound.timer.sound.volume = 0.1;
 }
 
+/*  initialize game settings    */
+Game.Settings = {
+    SOUND:  true,
+    TIMER:  true,
+    DEBUG:  false,
+    INIT:   function () {
+        this.SOUND = true;
+        this.TIMER = true;
+        this.DEBUG = true;
+    },
+};
+
 function toggleSnd() {
-    if (SOUND_ON) {
-        SOUND_ON = false;
+    if (Game.Settings.SOUND) {
+        Game.Settings.SOUND = false;
         document.getElementById("sound_button").innerHTML = `SOUND`;
     } else {
-        SOUND_ON = true;
+        Game.Settings.SOUND = true;
         document.getElementById("sound_button").innerHTML = `MUTE`;
     }
 }
@@ -83,12 +97,10 @@ function squareIt(x) {
 
 /*  incorrect answer subroutine */
 function wrongAnswer() {
-    if (DEBUG_ON === true) {
+    if (Game.Settings.DEBUG) {
         console.log(`The correct answer is: ${Game.answer}`);
     }
-    if (SOUND_ON) {
-        Game.Sound.lose.play();
-    }
+    Game.Sound.lose.play();
     let c = document.getElementById("gameCanvas");
     let ctx = c.getContext("2d");
     ctx.clearRect(0, 110, canvasWidth, canvasHeight);
@@ -97,8 +109,6 @@ function wrongAnswer() {
     ctx.textAlign = "center";
     ctx.fillText("Wrong!", canvasWidth/2, 350);
     Game.init();
-    document.getElementById("score").innerHTML = `SCORE: ${Game.score} pts`;
-    /*  disable all buttons */
     setTimeout(() => {
         document.getElementById("next").setAttribute("class", "disabled");
         document.getElementById("submit").setAttribute("class", "disabled");
@@ -113,31 +123,18 @@ function answer() {
     ctx.font = "bold 200px Arial";
     ctx.fillStyle = "rgb(0, 0, 0)";
     if (Game.answer == document.getElementById("user_input").value) {
-        /*  correct answer subroutine   */
-        if (SOUND_ON) {
-            /*  play correct.wav    */
             Game.Sound.win.play();
-        }
         ctx.textAlign = "center";
         ctx.fillText("Correct!", canvasWidth/2, 350);
         Game.score += 10;
         if (Game.score > Game.hiScore) {
             Game.hiScore = Game.score;
-            document.getElementById("hiscore").setAttribute("class", "scores blink");
         } 
-        
-        /*  display score   */
-        document.getElementById("score").innerHTML = `SCORE: ${Game.score} pts`;
-        document.getElementById("hiscore").innerHTML = `HI-SCORE: ${Game.hiScore} pts`;
-        /*  submit is disabled & next is enabled    */
         setTimeout(() => {
             document.getElementById("next").removeAttribute("class");
             document.getElementById("submit").setAttribute("class", "disabled");
         }, 100);
     } else {
-        if (SOUND_ON) {
-            /*  play wrong.wav    */
-        }
         wrongAnswer();
     } 
 }
@@ -145,16 +142,13 @@ function answer() {
 /*  Main Program    */
 function runGame() {
     Game.init();
-    document.getElementById("hiscore").setAttribute("class", "scores");
     stopTimer(timer);
-    document.getElementById("score").innerHTML = `SCORE: ${Game.score} pts`;
-    document.getElementById("hiscore").innerHTML = `HI-SCORE: ${Game.hiScore} pts`;
     document.getElementById("start_button").innerHTML = `RESTART`;
     newQuestion();   
 }
 
 function newQuestion() {
-    if (TIMER_ON) {
+    if (Game.Settings.TIMER) {
         startTimer(TIME);
     }
     var c = document.getElementById("gameCanvas");
@@ -178,7 +172,7 @@ function stopTimer(timer) {
 
 function startTimer(time) {
         timer = setInterval(() => {
-        //  displayTime(time);
+        Game.Sound.timer.play();
         Game.time = time;
         if (time < 1) {
             clearInterval(timer);
@@ -188,7 +182,7 @@ function startTimer(time) {
      }, 1000);
  }
 
-function displayTime(time) {
+/* function displayTime(time) {
      let c = document.getElementById("gameCanvas");
      let ctx = c.getContext("2d");
      let x = canvasWidth - 200;
@@ -202,7 +196,7 @@ function displayTime(time) {
          Game.Sound.timer.play();
      }
      ctx.fillText(time, canvasWidth - 100, 85);
-}
+} */
 
 function banner() {
     let c = document.getElementById("gameCanvas");
@@ -211,18 +205,40 @@ function banner() {
     ctx.fillRect(0, 0, canvasWidth, 100);
     ctx.fillStyle = "rgb(255,255, 255)"; 
     ctx.font = "bold 40px Dot Matrix";
-    ctx.textAlign = "left";
-    ctx.fillText("HI-SCORE", 40, 40);
-    ctx.fillText(`${Game.hiScore}`, 80, 80);
-    ctx.textAlign = "center";
-    ctx.fillText("TIME", canvasWidth/2, 40);
-    ctx.fillText(`${Game.time}`, canvasWidth/2, 80);
-    ctx.textAlign = "right";
-    ctx.fillText("SCORE", canvasWidth - 40, 40);
-    ctx.fillText(`${Game.score}`, canvasWidth - 80, 80);
+    if (Game.hiScore === Game.score) {
+        writeOnBanner("HI-SCORE", 40, 40, Game.hiScore, 80, 80, "left", true);     
+    } else {
+        writeOnBanner("HI-SCORE", 40, 40, Game.hiScore, 80, 80, "left", false);
+    }
+    if (Game.time < 6) {
+        writeOnBanner("TIME", canvasWidth/2, 40, Game.time, canvasWidth/2, 80, "center", true);
+    } else {
+        writeOnBanner("TIME", canvasWidth/2, 40, Game.time, canvasWidth/2, 80, "center", false);
+    }
+    writeOnBanner("SCORE", canvasWidth - 40, 40, Game.score, canvasWidth - 40, 80, "right", false);
 }
 
-var animate = setInterval(() => {
+function writeOnBanner(objName, x, y, objValue, xComp, yComp, objAlign, blink) {
+    let c = document.getElementById("gameCanvas");
+    let ctx = c.getContext("2d");
+    ctx.fillStyle = "rgb(255,255, 255)"; 
+    ctx.font = "bold 40px Dot Matrix";
+    ctx.textAlign = objAlign;
+    ctx.fillText(objName, x, y);
+    if (blink) {
+        count = (count + 1) % 3;
+        if (count === 0) {
+            if (ctx.fillStyle === "rgb(255, 0, 0)") {
+                ctx.fillStyle = "rgb(255, 255, 255)";
+            } else {
+                ctx.fillStyle = "rgb(255, 0, 0)"; 
+            }
+        }
+    }
+    ctx.fillText(objValue, xComp, yComp);
+}
+
+var animate = setInterval(() => {               
     let c = document.getElementById("gameCanvas");
     let ctx = c.getContext("2d");
     ctx.clearRect(0, 0, canvasWidth, 100);    
@@ -231,5 +247,6 @@ var animate = setInterval(() => {
 
 
 /*
-*   TODO:   1.  remove the functioning clickability from disabled buttons
+*               KNOWN BUGS 
+*  TODO:   1.  remove the functioning clickability from disabled buttons
 */
